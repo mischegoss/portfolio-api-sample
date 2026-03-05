@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ARIA Integration — API Documentation Samples</title>
+<meta name="description" content="Portfolio API documentation samples demonstrating technical writing proficiency across webhook triggers, chat callbacks, and user provisioning endpoints."/>
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--border:#2e3352;--accent:#5b7cf6;--text:#e2e8f0;--muted:#8892b0;--code-bg:#13151f;--font-mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:14px}
+.mod-banner{background:rgba(245,158,11,.08);border-bottom:1px solid rgba(245,158,11,.2);padding:11px 32px;font-size:12.5px;color:#fde68a;display:flex;align-items:flex-start;gap:10px}
+.mod-banner strong{font-weight:700}
+.top-nav{position:sticky;top:0;z-index:100;background:rgba(15,17,23,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;height:56px;display:flex;align-items:center;gap:16px}
+.logo{font-size:15px;font-weight:700;letter-spacing:-.02em}.logo span{color:var(--accent)}
+.nav-divider{font-size:12px;color:var(--muted);border-left:1px solid var(--border);padding-left:16px}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 90px)}
+.sidebar{border-right:1px solid var(--border);padding:24px 0;position:sticky;top:56px;height:calc(100vh - 56px);overflow-y:auto}
+.sidebar-section{margin-bottom:24px}
+.sidebar-label{padding:0 20px 8px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.sidebar-link{display:flex;align-items:center;gap:10px;padding:7px 20px;font-size:13px;color:var(--muted);cursor:pointer;transition:all .12s;border-left:2px solid transparent;text-decoration:none}
+.sidebar-link:hover{color:var(--text);background:var(--surface)}
+.sidebar-link.active{color:var(--accent);border-left-color:var(--accent);background:rgba(91,124,246,.08)}
+.method-badge{font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:4px;font-family:var(--font-mono);flex-shrink:0}
+.badge-post{background:rgba(91,124,246,.2);color:#818cf8}
+.badge-get{background:rgba(34,197,94,.2);color:#4ade80}
+.main{padding:40px 48px 80px;max-width:900px}
+.page-header{margin-bottom:48px}
+.eyebrow{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+.page-header h1{font-size:26px;font-weight:700;letter-spacing:-.03em;margin-bottom:14px}
+.page-header p{color:var(--muted);max-width:640px;font-size:14px;margin-bottom:16px}
+.intro-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.intro-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--muted)}
+.intro-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:7px}
+.intro-list li strong{color:var(--text)}
+.endpoint-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:48px;overflow:hidden}
+.endpoint-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.method-tag{font-family:var(--font-mono);font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;letter-spacing:.03em}
+.tag-post{background:rgba(91,124,246,.18);color:#a5b4fc;border:1px solid rgba(91,124,246,.3)}
+.tag-get{background:rgba(34,197,94,.15);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+.endpoint-path{font-family:var(--font-mono);font-size:13px;color:var(--text);font-weight:500;word-break:break-all}
+.endpoint-title{font-size:17px;font-weight:700;padding:20px 24px 0;letter-spacing:-.01em}
+.endpoint-desc{padding:10px 24px 20px;color:var(--muted);font-size:13.5px;line-height:1.6;border-bottom:1px solid var(--border)}
+.card-section{padding:20px 24px;border-bottom:1px solid var(--border)}
+.card-section:last-child{border-bottom:none}
+.section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 12px;color:var(--muted);font-weight:600;font-size:11.5px;border-bottom:1px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid rgba(46,51,82,.5);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.param-name{font-family:var(--font-mono);color:#f0abfc;font-size:12.5px;white-space:nowrap}
+.param-type{font-family:var(--font-mono);font-size:11.5px;color:#7dd3fc}
+.required-chip{display:inline-block;font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.25);text-transform:uppercase;letter-spacing:.04em;margin-left:4px}
+.optional-chip{display:inline-block;font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:rgba(100,116,139,.12);color:var(--muted);border:1px solid var(--border);text-transform:uppercase;letter-spacing:.04em;margin-left:4px}
+.param-desc{color:var(--muted);font-size:13px}
+.param-example{font-family:var(--font-mono);font-size:11.5px;color:#fbbf24;margin-top:4px;display:block}
+.param-note{font-size:12px;color:var(--muted);margin-top:4px;display:block;font-style:italic}
+.input-group-note{font-size:11.5px;color:var(--muted);padding:8px 12px 12px;font-style:italic;border-bottom:1px solid rgba(46,51,82,.5)}
+.code-block{background:var(--code-bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:8px}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.025)}
+.code-lang{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.copy-btn{font-size:11px;color:var(--muted);background:none;border:1px solid var(--border);border-radius:4px;padding:3px 10px;cursor:pointer;transition:all .12s;font-family:inherit}
+.copy-btn:hover{color:var(--text);border-color:var(--muted)}
+pre{padding:18px;overflow-x:auto;font-family:var(--font-mono);font-size:12.5px;line-height:1.75;color:#c9d1d9}
+.k{color:#79c0ff}.s{color:#a5d6ff}.v{color:#ffa657}.c{color:#6e7681;font-style:italic}.m{color:#ff7b72}.u{color:#a5d6ff}.h{color:#d2a8ff}
+.response-row{display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid rgba(46,51,82,.4);font-size:13px}
+.response-row:last-child{border-bottom:none}
+.status-code{font-family:var(--font-mono);font-size:12.5px;font-weight:700;padding:3px 8px;border-radius:5px;min-width:44px;text-align:center;flex-shrink:0;margin-top:1px}
+.s2xx{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+.s4xx{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.25)}
+.s5xx{background:rgba(249,115,22,.15);color:#fb923c;border:1px solid rgba(249,115,22,.25)}
+.response-text{color:var(--muted);line-height:1.55}
+.response-label{color:var(--text);font-weight:600;margin-bottom:2px}
+.callout{display:flex;gap:10px;padding:12px 14px;border-radius:8px;font-size:13px;line-height:1.55;margin-top:12px}
+.callout-warn{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#fde68a}
+.callout-info{background:rgba(91,124,246,.08);border:1px solid rgba(91,124,246,.2);color:#c7d2fe}
+.callout-tip{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);color:#bbf7d0}
+.callout-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.auth-badge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;padding:4px 10px;border-radius:6px;background:rgba(124,91,246,.12);border:1px solid rgba(124,91,246,.25);color:#c4b5fd;font-weight:500;margin-left:auto;white-space:nowrap}
+.sample-label{display:inline-flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:20px;letter-spacing:.02em}
+.sample-num{background:var(--accent);color:#fff;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800}
+.doc-divider{display:flex;align-items:center;gap:12px;margin:52px 0 36px}
+.doc-divider-line{flex:1;height:1px;background:var(--border)}
+.doc-divider-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);white-space:nowrap}
+code{font-family:var(--font-mono);font-size:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);padding:1px 5px;border-radius:4px;color:#f0abfc}
+.perf-note{color:var(--muted);font-size:13px}
+@media(max-width:768px){.layout{grid-template-columns:1fr}.sidebar{display:none}.main{padding:24px 20px 60px}}
+</style>
+</head>
+<body>
+
+<!-- ── Modification Banner ── -->
+<div class="mod-banner">
+  <span style="margin-top:1px">⚠</span>
+  <span><strong>Portfolio Note:</strong> Product names, domain names, and vendor-specific identifiers in this document have been generalized for portfolio use. The documentation structure, technical depth, parameter schemas, error handling, and integration patterns reflect original work produced for a client integration project.</span>
+</div>
+
+<!-- ── Top Nav ── -->
+<nav class="top-nav">
+  <div class="logo">ARIA <span>API Docs</span></div>
+  <div class="nav-divider">Integration Reference</div>
+</nav>
+
+<div class="layout">
+
+<!-- ── Sidebar ── -->
+<aside class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Overview</div>
+    <a class="sidebar-link" href="#intro">Introduction</a>
+    <a class="sidebar-link" href="#sample1">Sample 1</a>
+    <a class="sidebar-link" href="#sample2">Sample 2</a>
+    <a class="sidebar-link" href="#sample3">Sample 3</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">FlowEngine API</div>
+    <a class="sidebar-link" href="#sample1">
+      <span class="method-badge badge-post">POST</span>Webhooks / postEvent
+    </a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">HelixBot Chat API</div>
+    <a class="sidebar-link" href="#sample2">
+      <span class="method-badge badge-post">POST</span>chat / messages
+    </a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">ITSM Platform API</div>
+    <a class="sidebar-link" href="#sample3">
+      <span class="method-badge badge-get">GET</span>table / sys_user
+    </a>
+  </div>
+</aside>
+
+<!-- ── Main Content ── -->
+<main class="main">
+
+  <!-- Page Header -->
+  <div class="page-header" id="intro">
+    <div class="eyebrow">API Reference — Portfolio Sample</div>
+    <h1>ARIA Integration API Documentation</h1>
+    <p>A collection of three sample technical guides showing how to integrate with core platforms. These samples cover everything a developer needs to get started — from secure authentication and data schemas to troubleshooting errors.</p>
+    <ul class="intro-list">
+      <li><strong>FlowEngine:</strong>&nbsp;Setting up webhook triggers.</li>
+      <li><strong>HelixBot:</strong>&nbsp;Handling real-time chat callbacks.</li>
+      <li><strong>ITSM Platform:</strong>&nbsp;Automating user provisioning.</li>
+    </ul>
+  </div>
+
+  <!-- Auth Overview -->
+  <div id="auth" style="margin-bottom:48px">
+    <h2 style="font-size:16px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em">Authentication Overview</h2>
+    <p style="color:var(--muted);font-size:13.5px;margin-bottom:14px">This integration uses two distinct authorization schemes. Using the wrong scheme for a given endpoint is the most common source of <code>401</code> errors.</p>
+    <table>
+      <thead><tr><th>Scheme</th><th>Format</th><th>Used By</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="param-name">Basic</span></td>
+          <td><span class="param-type">Basic &lt;base64(id:secret)&gt;</span></td>
+          <td class="param-desc">FlowEngine webhook trigger; ITSM Platform user sync</td>
+        </tr>
+        <tr>
+          <td><span class="param-name">Token</span></td>
+          <td><span class="param-type">Token &lt;api_key&gt;</span></td>
+          <td class="param-desc">HelixBot chat callback</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       SAMPLE 1 — POST Webhooks/postEvent
+  ════════════════════════════════════ -->
+  <div id="sample1">
+    <div class="sample-label"><span class="sample-num">1</span>FlowEngine Webhook Trigger</div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="method-tag tag-post">POST</span>
+        <span class="endpoint-path">https://flowengine-api.flowengine.io/api/Webhooks/postEvent/<strong>{tenant_id}</strong></span>
+        <span class="auth-badge">
+          <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>Basic Auth
+        </span>
+      </div>
+      <div class="endpoint-title">Trigger a FlowEngine Workflow via Webhook</div>
+      <div class="endpoint-desc">
+        Documents the bridge between HelixBot and FlowEngine. This guide covers how to send user-supplied data to trigger specific workflows and how to set up the "callback" loop so the bot can receive and display the final response.
+      </div>
+
+      <!-- Path Params -->
+      <div class="card-section">
+        <div class="section-title">Path Parameters</div>
+        <table>
+          <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="param-name">tenant_id</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Your FlowEngine tenant identifier, obtained during environment setup.<span class="param-example">Example: acme-prod-01</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Headers -->
+      <div class="card-section">
+        <div class="section-title">Request Headers</div>
+        <table>
+          <thead><tr><th>Header</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="param-name">Authorization</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc"><code>Basic &lt;BASE64_TOKEN&gt;</code> — Base64-encoded string of <code>CLIENT_ID:SECRET_KEY</code>. There must be exactly one space between <code>Basic</code> and the token value.<span class="param-example">Example: Basic dXNlcjpwYXNzd29yZA==</span></td>
+            </tr>
+            <tr>
+              <td><span class="param-name">Content-Type</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc"><code>application/json</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Request Body -->
+      <div class="card-section">
+        <div class="section-title">Request Body</div>
+        <table>
+          <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="param-name">entrypoint</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Must be <code>"FlowEngineWebhook"</code> to route the event to the correct handler.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">flowname</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Exact name of the FlowEngine workflow to trigger. Must match the configured workflow name — case-sensitive.<span class="param-example">Example: "PasswordReset"</span></td>
+            </tr>
+            <tr>
+              <td><span class="param-name">requestor.requestor_name</span><span class="optional-chip">Optional</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Full display name of the user initiating the request.<span class="param-example">Example: "Jane Smith"</span></td>
+            </tr>
+            <tr>
+              <td><span class="param-name">requestor.user_email</span><span class="optional-chip">Optional</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Email address of the requesting user.<span class="param-example">Example: "jsmith@acme.com"</span></td>
+            </tr>
+            <!-- ── input1–5 expanded into individual rows ── -->
+            <tr>
+              <td><span class="param-name">data.input1</span><span class="optional-chip">Optional</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">First user-supplied value collected during the HelixBot conversation.<span class="param-example">Example: "jsmith"</span></td>
+            </tr>
+            <tr>
+              <td><span class="param-name">data.input2</span><span class="optional-chip">Optional</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Second user-supplied value. Pass <code>""</code> if unused.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">data.input3</span><span class="optional-chip">Optional</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Third user-supplied value. Pass <code>""</code> if unused.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">data.input4</span><span class="optional-chip">Optional</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Fourth user-supplied value. Pass <code>""</code> if unused.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">data.input5</span><span class="optional-chip">Optional</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Fifth user-supplied value. Pass <code>""</code> if unused.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">response.platform</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Must be <code>"helixbot"</code>. Tells FlowEngine which callback handler to use when returning the result.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">response.callback_url</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string (URL)</span></td>
+              <td class="param-desc">The HelixBot endpoint FlowEngine will POST its result to on workflow completion. See <em>POST /api/chat/v0.1/messages/</em>.<span class="param-example">Example: "https://acme.helix-platform.com/api/chat/v0.1/messages/"</span></td>
+            </tr>
+            <tr>
+              <td><span class="param-name">response.callback_token</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">The HelixBot API key used to authenticate the callback request. Passed as a <code>Token</code> bearer value in the callback's <code>Authorization</code> header.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">response.channel_id</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string (UUID)</span></td>
+              <td class="param-desc">UUID of the HelixBot chat channel where the response should be delivered. Must be wrapped in quotes.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">response.user_id</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">integer</span></td>
+              <td class="param-desc">Numeric ID of the HelixBot user. Must <em>not</em> be wrapped in quotes.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Code Example -->
+      <div class="card-section">
+        <div class="section-title">Example Request</div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">cURL</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="m">curl</span> -X POST <span class="u">'https://flowengine-api.flowengine.io/api/Webhooks/postEvent/acme-prod-01'</span> \
+  -H <span class="h">'Authorization: Basic dXNlcjpwYXNzd29yZA=='</span> \
+  -H <span class="h">'Content-Type: application/json'</span> \
+  -d <span class="s">'{
+    "entrypoint": "FlowEngineWebhook",
+    "flowname":   "PasswordReset",
+    "requestor": {
+      "requestor_name": "Jane Smith",
+      "user_email":     "jsmith@acme.com"
+    },
+    "data": {
+      "input1": "jsmith",
+      "input2": "",
+      "input3": "",
+      "input4": "",
+      "input5": ""
+    },
+    "response": {
+      "platform":       "helixbot",
+      "callback_url":   "https://acme.helix-platform.com/api/chat/v0.1/messages/",
+      "callback_token": "abc123HelixBotKey",
+      "channel_id":     "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "user_id":        84201
+    }
+  }'</span></pre>
+        </div>
+      </div>
+
+      <!-- Response Codes -->
+      <div class="card-section">
+        <div class="section-title">Response Codes</div>
+        <div class="response-row"><span class="status-code s2xx">200</span><div class="response-text"><div class="response-label">OK</div>Event accepted. FlowEngine processes the workflow asynchronously and POSTs the result back to <code>callback_url</code> on completion.</div></div>
+        <div class="response-row"><span class="status-code s4xx">401</span><div class="response-text"><div class="response-label">Unauthorized</div>Invalid or malformed <code>Authorization</code> header. Verify the Base64 token is correct and that there is exactly one space after <code>Basic</code>.</div></div>
+        <div class="response-row"><span class="status-code s4xx">404</span><div class="response-text"><div class="response-label">Not Found</div>The <code>tenant_id</code> path parameter does not match any active FlowEngine tenant.</div></div>
+        <div class="response-row"><span class="status-code s5xx">500</span><div class="response-text"><div class="response-label">Server Error</div>The <code>flowname</code> value does not match any workflow in the tenant, or the payload is structurally invalid.</div></div>
+      </div>
+
+      <!-- Notes -->
+      <div class="card-section">
+        <div class="section-title">Notes &amp; Known Issues</div>
+        <div class="callout callout-warn"><span class="callout-icon">⚠</span><span>The <code>${url}</code> and <code>${tenant_id}</code> variables in the method endpoint resolve from the <strong>Configuration</strong> JSON field — not from Credentials. If Configuration is null, these variables will not resolve and every request will fail. If the Configuration field does not persist on first save, delete and recreate the integration record.</span></div>
+        <div class="callout callout-info" style="margin-top:8px"><span class="callout-icon">ℹ</span><span><strong>Smart quotes break cURL commands.</strong> If copying from a document or chat interface, retype all quotation marks manually in your terminal — curly quotes are not valid shell syntax and will silently corrupt the request.</span></div>
+        <div class="callout callout-tip" style="margin-top:8px"><span class="callout-icon">✓</span><span><strong>Generating the Base64 token — Mac:</strong> <code>echo -n 'CLIENT_ID:SECRET_KEY' | base64</code>. <strong>Windows PowerShell:</strong> <code>[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes('CLIENT_ID:SECRET_KEY'))</code>. Decode with the reverse commands to verify the token before use.</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       SAMPLE 2 — POST /api/chat/v0.1/messages/
+  ════════════════════════════════════ -->
+  <div class="doc-divider"><div class="doc-divider-line"></div><div class="doc-divider-label">Sample 2</div><div class="doc-divider-line"></div></div>
+  <div id="sample2">
+    <div class="sample-label"><span class="sample-num">2</span>HelixBot Chat Callback</div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="method-tag tag-post">POST</span>
+        <span class="endpoint-path">https://<strong>{tenant}</strong>.helix-platform.com/api/chat/v0.1/messages/</span>
+        <span class="auth-badge">
+          <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>Token Auth
+        </span>
+      </div>
+      <div class="endpoint-title">Asynchronous Chat Callbacks</div>
+      <div class="endpoint-desc">
+        Documents the process for "waking up" a suspended chatbot session once a background task is finished. This guide shows how FlowEngine (or any external service) securely pushes a response back to the specific user channel using Token-based authorization to ensure the right message reaches the right session.
+      </div>
+
+      <!-- Path Params -->
+      <div class="card-section">
+        <div class="section-title">Path Parameters</div>
+        <table>
+          <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="param-name">tenant</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Your HelixBot tenant subdomain.<span class="param-example">Example: acme → https://acme.helix-platform.com/...</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Headers -->
+      <div class="card-section">
+        <div class="section-title">Request Headers</div>
+        <table>
+          <thead><tr><th>Header</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="param-name">Authorization</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc"><code>Token &lt;HELIXBOT_KEY&gt;</code> — uses the <code>Token</code> scheme, <strong>not</strong> <code>Basic</code>. The HelixBot API Key is generated from the Integration Hub admin panel.<span class="param-example">Example: Token abc123HelixBotKey</span></td>
+            </tr>
+            <tr>
+              <td><span class="param-name">Content-Type</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc"><code>application/json</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Request Body -->
+      <div class="card-section">
+        <div class="section-title">Request Body</div>
+        <table>
+          <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="param-name">channel_id</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string (UUID)</span></td>
+              <td class="param-desc">UUID of the active chat channel. Extracted from the original inbound webhook payload's Audit Trail. Must be wrapped in quotes.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">user_id</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">integer</span></td>
+              <td class="param-desc">Numeric ID of the HelixBot user. Extracted from the inbound webhook payload. Must <em>not</em> be quoted — passing as a string will cause a <code>400</code> error.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">type</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Must be <code>"bot_action"</code> to route the message through the bot action handler.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">text</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Pass an empty string <code>""</code>. The visible response content is carried in <code>metadata.bot_metadata.result_msg</code>, not in this field.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">metadata.action</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Must be <code>"com.helix.bot_action.bot_input"</code>.</td>
+            </tr>
+            <tr>
+              <td><span class="param-name">metadata.bot_metadata.result_msg</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">The message text displayed to the user in their HelixBot chat window. This is the value the suspended intent step resolves to when the callback is received.<span class="param-example">Example: "Your password has been reset successfully."</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Code Example -->
+      <div class="card-section">
+        <div class="section-title">Example Request</div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">cURL — Mac / Linux</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="m">curl</span> -X POST \
+  <span class="u">'https://acme.helix-platform.com/api/chat/v0.1/messages/'</span> \
+  -H <span class="h">'Content-Type: application/json'</span> \
+  -H <span class="h">'Authorization: Token abc123HelixBotKey'</span> \
+  -d <span class="s">'{
+    "channel_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "text":       "",
+    "type":       "bot_action",
+    "user_id":    84201,
+    "metadata": {
+      "action": "com.helix.bot_action.bot_input",
+      "bot_metadata": {
+        "result_msg": "Your password has been reset successfully."
+      }
+    }
+  }'</span></pre>
+        </div>
+        <div class="code-block" style="margin-top:10px">
+          <div class="code-header"><span class="code-lang">cURL — Windows (Command Prompt)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="m">curl</span> -X POST <span class="u">"https://acme.helix-platform.com/api/chat/v0.1/messages/"</span> ^
+  -H <span class="h">"Content-Type: application/json"</span> ^
+  -H <span class="h">"Authorization: Token abc123HelixBotKey"</span> ^
+  -d <span class="s">"{\"channel_id\": \"f47ac10b-58cc-4372-a567-0e02b2c3d479\",
+  \"text\": \"\", \"type\": \"bot_action\", \"user_id\": 84201,
+  \"metadata\": {\"action\": \"com.helix.bot_action.bot_input\",
+  \"bot_metadata\": {\"result_msg\": \"Password reset successful.\"}}}"</span></pre>
+        </div>
+      </div>
+
+      <!-- Response Codes -->
+      <div class="card-section">
+        <div class="section-title">Response Codes</div>
+        <div class="response-row"><span class="status-code s2xx">200</span><div class="response-text"><div class="response-label">OK</div>Message delivered. The <code>result_msg</code> is displayed in the user's chat window and the suspended conversation step resolves.</div></div>
+        <div class="response-row"><span class="status-code s4xx">401</span><div class="response-text"><div class="response-label">Unauthorized</div>The HelixBot API Key is missing, expired, or uses the wrong authorization scheme. Confirm the header uses <code>Token</code> — not <code>Basic</code>.</div></div>
+        <div class="response-row"><span class="status-code s4xx">400</span><div class="response-text"><div class="response-label">Bad Request</div>Malformed JSON body, <code>user_id</code> passed as a quoted string instead of an integer, or <code>channel_id</code> / <code>user_id</code> do not correspond to an open, active conversation.</div></div>
+      </div>
+
+      <!-- Notes -->
+      <div class="card-section">
+        <div class="section-title">Notes &amp; Known Issues</div>
+        <div class="callout callout-warn"><span class="callout-icon">⚠</span><span>A <code>200</code> response that produces no visible update in the chat window usually means the conversation has already closed. Ensure the intent's suspend-and-listen parameter has <strong>Required</strong> checked — this holds the session open until the callback arrives. Sessions that close before receiving the callback cannot be resumed.</span></div>
+        <div class="callout callout-info" style="margin-top:8px"><span class="callout-icon">ℹ</span><span>The <code>channel_id</code> and <code>user_id</code> values appear in the platform Audit Trail after an intent fires the outbound webhook. The <code>channel_id</code> is a UUID string and must be quoted; the <code>user_id</code> is an integer and must <em>not</em> be quoted. Swapping the quoting convention on either field will produce a <code>400</code>.</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════
+       SAMPLE 3 — GET /api/now/table/sys_user
+  ════════════════════════════════════ -->
+  <div class="doc-divider"><div class="doc-divider-line"></div><div class="doc-divider-label">Sample 3</div><div class="doc-divider-line"></div></div>
+  <div id="sample3">
+    <div class="sample-label"><span class="sample-num">3</span>ITSM Platform User Provisioning</div>
+
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="method-tag tag-get">GET</span>
+        <span class="endpoint-path">https://<strong>{instance}</strong>.itsm-platform.com/api/now/table/sys_user</span>
+        <span class="auth-badge">
+          <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>Basic Auth
+        </span>
+      </div>
+      <div class="endpoint-title">ITSM User Provisioning &amp; Sync</div>
+      <div class="endpoint-desc">
+        Documents how HelixBot fetches and filters live account data from an ITSM platform to automate user setup. This guide explains how to pass custom UI-generated queries (<code>sysparm_query</code>) to the <code>sys_user</code> table and details the security requirements for the dedicated service account authentication.
+      </div>
+
+      <!-- Path Params -->
+      <div class="card-section">
+        <div class="section-title">Path Parameters</div>
+        <table>
+          <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="param-name">instance</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Your ITSM Platform instance subdomain.<span class="param-example">Example: acmecorp → https://acmecorp.itsm-platform.com/...</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Auth -->
+      <div class="card-section">
+        <div class="section-title">Authentication</div>
+        <table>
+          <thead><tr><th>Header</th><th>Type</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="param-name">Authorization</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">
+                <code>Basic &lt;base64(username:password)&gt;</code> — credentials for the dedicated <code>helix.integration</code> service account. Using a named service account rather than a personal admin credential ensures audit logs clearly distinguish automated bot actions from manual admin changes. This account must hold the <code>helix_agent</code>, <code>helix_admin</code>, and <code>helix_integration</code> roles in the ITSM Platform.
+                <div class="callout callout-warn" style="margin-top:10px"><span class="callout-icon">⚠</span><span>The <code>helix.integration</code> password must be identical in both the ITSM Platform and the HelixBot Integration Hub. A mismatch will produce a <code>401</code> on connection test even when each credential is individually valid.</span></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Query Params -->
+      <div class="card-section">
+        <div class="section-title">Query Parameters</div>
+        <table>
+          <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="param-name">sysparm_query</span><span class="required-chip">Required</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">An ITSM Platform-encoded filter expression. Build this in the platform's <strong>Organization &gt; Users</strong> table by applying filters, then right-clicking the filter breadcrumb and selecting <em>Copy Query</em>.<span class="param-example">Basic: active=true</span><span class="param-example">Advanced: active=true^departmentLIKEEngineering</span></td>
+            </tr>
+            <tr>
+              <td><span class="param-name">sysparm_fields</span><span class="optional-chip">Optional</span></td>
+              <td><span class="param-type">string</span></td>
+              <td class="param-desc">Comma-separated list of fields to return. Reduces response payload size. If omitted, all fields are returned.<span class="param-example">Example: user_name,email,first_name,last_name,active</span></td>
+            </tr>
+            <tr>
+              <td><span class="param-name">sysparm_limit</span><span class="optional-chip">Optional</span></td>
+              <td><span class="param-type">integer</span></td>
+              <td class="param-desc">Maximum number of records per page. Defaults to 10,000. Use with <code>sysparm_offset</code> to paginate large tenants.<span class="param-example">Example: 500</span></td>
+            </tr>
+            <tr>
+              <td><span class="param-name">sysparm_offset</span><span class="optional-chip">Optional</span></td>
+              <td><span class="param-type">integer</span></td>
+              <td class="param-desc">Zero-based record offset for pagination. Combine with <code>sysparm_limit</code> to step through large result sets.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Code Example -->
+      <div class="card-section">
+        <div class="section-title">Example Request &amp; Response</div>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">cURL</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="c"># Sync all active users from ITSM Platform to HelixBot</span>
+<span class="m">curl</span> -X GET \
+  <span class="u">'https://acmecorp.itsm-platform.com/api/now/table/sys_user?sysparm_query=active%3Dtrue&amp;sysparm_fields=user_name,email,first_name,last_name,active&amp;sysparm_limit=500'</span> \
+  -H <span class="h">'Authorization: Basic aGVsaXguaW50ZWdyYXRpb246c2VjcmV0'</span> \
+  -H <span class="h">'Accept: application/json'</span></pre>
+        </div>
+        <div class="code-block" style="margin-top:10px">
+          <div class="code-header"><span class="code-lang">Response — 200 OK</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="k">{</span>
+  <span class="k">"result"</span>: <span class="k">[</span>
+    <span class="k">{</span>
+      <span class="k">"user_name"</span>:  <span class="s">{ "display_value": "jsmith",          "value": "jsmith" }</span>,
+      <span class="k">"email"</span>:      <span class="s">{ "display_value": "jsmith@acme.com", "value": "jsmith@acme.com" }</span>,
+      <span class="k">"first_name"</span>: <span class="s">{ "display_value": "Jane",            "value": "Jane" }</span>,
+      <span class="k">"last_name"</span>:  <span class="s">{ "display_value": "Smith",           "value": "Smith" }</span>,
+      <span class="k">"active"</span>:     <span class="s">{ "display_value": "true",            "value": "true" }</span>
+    <span class="k">}</span>
+    <span class="c">// ... additional user records</span>
+  <span class="k">]</span>
+<span class="k">}</span></pre>
+        </div>
+      </div>
+
+      <!-- Perf Table -->
+      <div class="card-section">
+        <div class="section-title">Sync Performance Reference</div>
+        <table>
+          <thead><tr><th>User Count</th><th>Est. Sync Time</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>1 – 50</td><td>30 – 60 sec</td><td class="perf-note">Suitable for pilot or test environments.</td></tr>
+            <tr><td>50 – 200</td><td>1 – 3 min</td><td class="perf-note">Typical for small to mid-size deployments.</td></tr>
+            <tr><td>200 – 500</td><td>3 – 5 min</td><td class="perf-note">Consider scheduling syncs during off-peak hours.</td></tr>
+            <tr><td>500+</td><td>5 – 10+ min</td><td class="perf-note">Paginate using <code>sysparm_limit</code>; run during low-traffic windows.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Response Codes -->
+      <div class="card-section">
+        <div class="section-title">Response Codes</div>
+        <div class="response-row"><span class="status-code s2xx">200</span><div class="response-text"><div class="response-label">OK</div>Query executed. The <code>result</code> array contains matching user records. An empty array <code>[]</code> means no users matched the filter — verify the query directly in the ITSM Platform Users table.</div></div>
+        <div class="response-row"><span class="status-code s4xx">401</span><div class="response-text"><div class="response-label">Unauthorized</div>The <code>helix.integration</code> credentials are incorrect, or the password does not match between the ITSM Platform and HelixBot. Re-verify both sides use the identical value.</div></div>
+        <div class="response-row"><span class="status-code s4xx">403</span><div class="response-text"><div class="response-label">Forbidden</div>The <code>helix.integration</code> service account is missing one or more required roles. Verify all three <code>helix_</code> roles are assigned in the ITSM Platform.</div></div>
+        <div class="response-row"><span class="status-code s4xx">404</span><div class="response-text"><div class="response-label">Not Found</div>The integration update set has not been installed or the Helix application is not visible in this instance. Search for "Helix" in the platform's application navigator to confirm installation.</div></div>
+      </div>
+
+      <!-- Notes -->
+      <div class="card-section">
+        <div class="section-title">Troubleshooting</div>
+        <div class="callout callout-warn"><span class="callout-icon">⚠</span><span>If sync returns <code>0 users</code>, open your browser's Network tab <em>before</em> clicking Run and inspect the outbound API request (URL contains <code>/api/now/table/sys_user</code>). Confirm the request URL includes your query string (e.g. <code>?active=true</code>) and that the response body is not an empty array <code>[]</code>. If empty, test the same query directly in the ITSM Platform Users table.</span></div>
+        <div class="callout callout-info" style="margin-top:8px"><span class="callout-icon">ℹ</span><span>If settings save successfully but the integration still fails, confirm you are operating within the correct <strong>Helix application scope</strong> in the ITSM Platform. A banner may prompt you to switch scope — do so before re-saving the configuration.</span></div>
+        <div class="callout callout-tip" style="margin-top:8px"><span class="callout-icon">✓</span><span>After sync completes, verify provisioned users at <strong>Users &gt; List</strong> in the HelixBot admin panel. Confirm names and email addresses are populated and users are marked active before proceeding to end-to-end integration testing.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top:60px;padding-top:24px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <div style="font-size:12px;color:var(--muted)">ARIA Integration API Documentation — Portfolio Sample</div>
+    <div style="font-size:12px;color:var(--muted)">Names and identifiers generalized for portfolio use</div>
+  </div>
+
+</main>
+</div>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  }).catch(() => {
+    btn.textContent = 'Failed';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
+const sectionIds = ['intro','sample1','sample2','sample3'];
+const allLinks = document.querySelectorAll('.sidebar-link');
+window.addEventListener('scroll', () => {
+  let current = 'intro';
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 120) current = id;
+  });
+  allLinks.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>
