@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Integration Map — Tamar Auber</title>
+    <meta
+      name="description"
+      content="The Integration Map — integration tutorials by Tamar Auber."
+    />
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --cerulean: #0f2143;
+        --olive: #43572e;
+        --pacific: #354e56;
+        --gold: #8b6212;
+        --gold-light: #b07e18;
+        --rust: #7a3b1e;
+        --bg: #f5f3ee;
+        --surface: #ffffff;
+        --surface-2: #f9f8f5;
+        --text: #1a1a1a;
+        --text-mid: #3d3d3d;
+        --text-soft: #5c5c5c;
+        --rule: #d9d5cc;
+        --rule-light: #ece9e3;
+        --code-bg: #f0ede6;
+        --note-bg: #fdf8ed;
+        --note-border: #c89a2a;
+        --warn-bg: #fdf3ee;
+        --warn-border: #c0622a;
+        --check-bg: #f1f5ee;
+        --check-border: #5a7a3a;
+      }
+
+      html { font-size: 16px; scroll-behavior: smooth; }
+
+      body {
+        font-family: Georgia, 'Times New Roman', serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.75;
+        padding: 0 24px;
+      }
+
+      /* ── Top nav ── */
+      .topnav {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 20px 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .back-link {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--gold);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: color 0.15s;
+      }
+      .back-link:hover { color: var(--gold-light); }
+
+      .nav-label {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+      }
+
+      /* ── Page layout ── */
+      .page {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 56px 0 96px;
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        gap: 0 60px;
+        align-items: start;
+      }
+
+      /* ── Sidebar TOC ── */
+      .toc {
+        position: sticky;
+        top: 32px;
+        padding-right: 24px;
+        border-right: 1px solid var(--rule);
+      }
+
+      .toc-heading {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        margin-bottom: 14px;
+      }
+
+      .toc-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .toc-list li a {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13px;
+        color: var(--text-soft);
+        text-decoration: none;
+        display: block;
+        padding: 4px 0 4px 10px;
+        border-left: 2px solid transparent;
+        transition: color 0.15s, border-color 0.15s;
+        line-height: 1.4;
+      }
+      .toc-list li a:hover {
+        color: var(--cerulean);
+        border-left-color: var(--gold);
+      }
+
+      .toc-list li.toc-section > a {
+        font-weight: 700;
+        color: var(--text-mid);
+        margin-top: 14px;
+        font-size: 13px;
+      }
+      .toc-list li.toc-section:first-child > a {
+        margin-top: 0;
+      }
+      .toc-sub a {
+        font-size: 12px !important;
+        padding-left: 18px !important;
+      }
+
+      /* ── Main content ── */
+      .content { min-width: 0; }
+
+      .page-header {
+        margin-bottom: 44px;
+        padding-bottom: 28px;
+        border-bottom: 2px solid var(--cerulean);
+      }
+
+      .page-eyebrow {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .page-header h1 {
+        font-size: clamp(24px, 3vw, 34px);
+        font-weight: 700;
+        color: var(--cerulean);
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        margin-bottom: 12px;
+      }
+
+      .page-header p {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 14.5px;
+        color: var(--text-soft);
+        max-width: 580px;
+        line-height: 1.65;
+      }
+
+      /* Portfolio note */
+      .portfolio-note {
+        background: var(--warn-bg);
+        border-left: 3px solid var(--warn-border);
+        border-radius: 0 4px 4px 0;
+        padding: 14px 18px;
+        margin-bottom: 52px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13px;
+        color: var(--text-mid);
+        line-height: 1.6;
+      }
+      .portfolio-note strong { color: var(--rust); }
+
+      /* ── Sample sections ── */
+      .sample {
+        margin-bottom: 72px;
+        padding-bottom: 64px;
+        border-bottom: 1px solid var(--rule);
+      }
+      .sample:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .sample-label {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .sample h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--cerulean);
+        letter-spacing: -0.015em;
+        margin-bottom: 6px;
+        line-height: 1.2;
+      }
+
+      .sample-meta {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13.5px;
+        color: var(--text-soft);
+        margin-bottom: 28px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--rule-light);
+        line-height: 1.6;
+      }
+
+      /* Doc body typography */
+      .doc h3 {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--cerulean);
+        letter-spacing: -0.01em;
+        margin: 36px 0 10px;
+        line-height: 1.3;
+      }
+      .doc h3:first-child { margin-top: 0; }
+
+      .doc h4 {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-mid);
+        margin: 28px 0 8px;
+      }
+      .doc h4:first-child { margin-top: 0; }
+
+      .doc p {
+        font-size: 15.5px;
+        color: var(--text-mid);
+        margin-bottom: 16px;
+        line-height: 1.75;
+      }
+
+      .doc strong { color: var(--text); font-weight: 700; }
+
+      .doc ul, .doc ol { margin: 4px 0 16px 22px; }
+      .doc li {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 14.5px;
+        color: var(--text-mid);
+        margin-bottom: 6px;
+        line-height: 1.65;
+      }
+      .doc li strong { color: var(--text); }
+
+      /* Numbered steps */
+      .doc ol.steps { counter-reset: steps; list-style: none; margin-left: 0; }
+      .doc ol.steps li {
+        counter-increment: steps;
+        padding-left: 38px;
+        position: relative;
+        margin-bottom: 10px;
+        font-size: 14.5px;
+        line-height: 1.65;
+      }
+      .doc ol.steps li::before {
+        content: counter(steps);
+        position: absolute;
+        left: 0;
+        top: 1px;
+        width: 24px;
+        height: 24px;
+        background: var(--cerulean);
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Inline code */
+      code {
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        font-size: 13px;
+        background: var(--code-bg);
+        color: var(--pacific);
+        padding: 1px 6px;
+        border-radius: 3px;
+        white-space: nowrap;
+      }
+
+      /* Callouts */
+      .callout {
+        border-radius: 0 4px 4px 0;
+        padding: 14px 18px;
+        margin: 20px 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13.5px;
+        line-height: 1.65;
+      }
+      .callout p { font-family: inherit; font-size: inherit; margin-bottom: 0; color: inherit; }
+      .callout p + p { margin-top: 8px; }
+      .callout-warn { background: var(--warn-bg); border-left: 3px solid var(--warn-border); color: var(--text-mid); }
+      .callout-note { background: var(--note-bg); border-left: 3px solid var(--note-border); color: var(--text-mid); }
+      .callout-check { background: var(--check-bg); border-left: 3px solid var(--check-border); color: var(--text-mid); }
+      .callout-icon { font-style: normal; margin-right: 6px; }
+
+      /* Checkpoints */
+      .checkpoint {
+        background: var(--check-bg);
+        border: 1px solid var(--check-border);
+        border-radius: 4px;
+        padding: 12px 16px;
+        margin: 16px 0 24px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13.5px;
+        color: var(--olive);
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .checkpoint::before { content: "✓"; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+      /* Tables */
+      .doc table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0 24px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13.5px;
+      }
+      .doc th {
+        background: var(--cerulean);
+        color: #fff;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        padding: 10px 14px;
+        text-align: left;
+      }
+      .doc td {
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--rule-light);
+        color: var(--text-mid);
+        vertical-align: top;
+        line-height: 1.55;
+      }
+      .doc tr:nth-child(even) td { background: var(--surface-2); }
+      .doc td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+
+      /* Troubleshooting */
+      .trouble-item {
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        margin-bottom: 14px;
+        overflow: hidden;
+      }
+      .trouble-cause {
+        background: var(--surface-2);
+        padding: 12px 16px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text);
+        border-bottom: 1px solid var(--rule-light);
+      }
+      .trouble-body {
+        padding: 14px 16px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13.5px;
+        color: var(--text-mid);
+        line-height: 1.65;
+      }
+      .trouble-body p { margin-bottom: 6px; font-size: 13.5px; font-family: inherit; color: inherit; }
+      .trouble-body ul { margin: 6px 0 0 18px; }
+      .trouble-body li { font-size: 13.5px; margin-bottom: 4px; line-height: 1.6; }
+      .cause-tag {
+        font-size: 11.5px;
+        font-weight: 400;
+        color: var(--text-soft);
+        font-style: italic;
+        margin-left: 8px;
+      }
+
+      /* Doc meta strip */
+      .doc-meta {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 28px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--rule-light);
+        flex-wrap: wrap;
+      }
+      .doc-meta-item {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 12.5px;
+        color: var(--text-soft);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .doc-meta-item span { color: var(--text-mid); font-weight: 600; }
+
+      /* Prerequisites */
+      .prereq-list {
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        border-radius: 4px;
+        padding: 18px 20px;
+        margin: 8px 0 24px;
+        list-style: none;
+      }
+      .prereq-list li {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 14px;
+        color: var(--text-mid);
+        padding: 5px 0 5px 22px;
+        position: relative;
+        border-bottom: 1px solid var(--rule-light);
+        margin-bottom: 0;
+        line-height: 1.5;
+      }
+      .prereq-list li:last-child { border-bottom: none; }
+      .prereq-list li::before { content: "→"; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+
+      /* Footer */
+      footer {
+        max-width: 1080px;
+        margin: 52px auto 0;
+        padding: 20px 0;
+        border-top: 1px solid var(--rule);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 12px;
+        color: var(--text-soft);
+      }
+
+      @media (max-width: 760px) {
+        .page { grid-template-columns: 1fr; padding: 40px 0 72px; }
+        .toc { display: none; }
+        .topnav { padding: 16px 0; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="topnav" aria-label="Site navigation">
+      <a class="back-link" href="./index.html">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <line x1="17" y1="7" x2="7" y2="17" /><polyline points="17 17 7 17 7 7" />
+        </svg>
+        Back to portfolio
+      </a>
+      <span class="nav-label">03 — Integration Tutorials</span>
+    </nav>
+
+    <div class="page">
+
+      <!-- Sidebar TOC -->
+      <aside class="toc" aria-label="Table of contents">
+        <p class="toc-heading">Contents</p>
+        <ul class="toc-list">
+          <li class="toc-section"><a href="#overview">The Overview</a></li>
+          <li class="toc-sub"><a href="#overview-what">What It Accomplishes</a></li>
+          <li class="toc-sub"><a href="#overview-how">How Systems Work Together</a></li>
+          <li class="toc-sub"><a href="#overview-flow">The Complete Flow</a></li>
+          <li class="toc-sub"><a href="#overview-build">What You Can Build</a></li>
+          <li class="toc-section"><a href="#playbook">The Playbook</a></li>
+          <li class="toc-sub"><a href="#itsm-s1">Log In</a></li>
+          <li class="toc-sub"><a href="#itsm-s2">Integration Settings</a></li>
+          <li class="toc-sub"><a href="#itsm-s3">Enter Credentials</a></li>
+          <li class="toc-sub"><a href="#itsm-s4">Integration Hub</a></li>
+          <li class="toc-sub"><a href="#itsm-s5">Test Connection</a></li>
+          <li class="toc-sub"><a href="#itsm-trouble">Troubleshooting</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main content -->
+      <main>
+
+        <header class="page-header">
+          <span class="page-eyebrow">Technical Writing Portfolio — Tamar Auber</span>
+          <h1>The Integration Map</h1>
+          <p>Two samples from a master playbook: a high-level "big picture" intro for new developers and a step-by-step setup guide with a foolproof troubleshooting section.</p>
+        </header>
+
+        <div class="portfolio-note" role="note">
+          <strong>⚠ Portfolio Note:</strong> Product names, domain names, and vendor-specific identifiers in these samples have been generalized for portfolio use. The documentation structure, technical depth, and integration patterns reflect original work produced for a client integration project.
+        </div>
+
+        <!-- ── THE OVERVIEW ── -->
+        <section class="sample" id="overview">
+          <span class="sample-label">The Overview</span>
+          <h2>ARIA Integration — System Overview</h2>
+          <p class="sample-meta">Helping new developers understand the "why" and "how" of the system before they start building.</p>
+
+          <div class="doc">
+
+            <div class="doc-meta">
+              <div class="doc-meta-item">Reading time: <span>4 minutes</span></div>
+              <div class="doc-meta-item">Doc type: <span>Conceptual overview</span></div>
+            </div>
+
+            <p><strong>Learning objective:</strong> Understand how the ARIA integration enables conversational workflow automation — including the bidirectional flow of data between systems and the key components that allow users to trigger automated processes through a chat interface.</p>
+
+            <h4>Prerequisites</h4>
+            <p>While not required to build or understand the integration, familiarity with the following concepts is helpful:</p>
+            <ul class="prereq-list">
+              <li><strong>APIs</strong> — Systems exchange data through structured requests and responses</li>
+              <li><strong>Webhooks</strong> — Event-driven HTTP requests that push data between systems</li>
+              <li><strong>JSON</strong> — Structured data format for API communication</li>
+              <li><strong>Parameters</strong> — Discrete pieces of information collected from users (username, ticket number, etc.)</li>
+            </ul>
+            <p>Technical implementation details — including specific field names, values, and step-by-step configuration instructions — are covered in subsequent sections.</p>
+
+            <h3 id="overview-what">What This Integration Accomplishes</h3>
+            <p>The ARIA integration creates a bidirectional communication channel that connects a conversational AI platform (HelixBot) with a workflow automation platform (FlowEngine). This allows users to trigger complex backend processes through natural language chat, with results delivered directly in their conversation thread.</p>
+            <p>Instead of requiring users to navigate multiple systems or submit web forms, this integration handles the complete request lifecycle within the chat interface — from information collection to result delivery.</p>
+
+            <div class="callout callout-note">
+              <p><em class="callout-icon">ℹ</em><strong>Key capability:</strong> Users interact with enterprise systems and workflows using natural language in HelixBot, without leaving the chat window.</p>
+            </div>
+
+            <h3 id="overview-how">How HelixBot and FlowEngine Work Together</h3>
+            <p>The integration operates as a two-way communication pipeline where each system handles distinct responsibilities.</p>
+
+            <h4>HelixBot — The Front End (Information Gathering)</h4>
+            <ul>
+              <li>Understands user requests using natural language and intent prediction</li>
+              <li>Collects required information through conversation, user profile data, and system integrations</li>
+              <li>Translates user inputs into structured payloads that FlowEngine can process</li>
+              <li>Displays workflow results back to the user in the chat</li>
+            </ul>
+
+            <h4>FlowEngine — The Back End (Information Processing)</h4>
+            <ul>
+              <li>Receives structured requests from HelixBot via webhook</li>
+              <li>Executes the workflow (password reset, account lookup, access request, etc.) using the provided data</li>
+              <li>Integrates with enterprise systems or databases as needed</li>
+              <li>Sends results back to HelixBot so the user sees the outcome in their chat</li>
+            </ul>
+
+            <h4>The Connection Point</h4>
+            <p>A webhook acts as the bridge. When a user completes their request in chat, HelixBot packages all the information into a JSON payload and sends it to FlowEngine. FlowEngine processes it and sends the result back through HelixBot's callback API. The user never leaves the chat.</p>
+
+            <h3 id="overview-flow">The Complete Flow</h3>
+            <p>Here's what happens when a user types <em>"I need to reset my password"</em>:</p>
+
+            <table>
+              <thead>
+                <tr><th>#</th><th>Stage</th><th>What happens</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>User Trigger</td>
+                  <td>The user types a request. HelixBot's intent prediction matches it to the "password reset" workflow.</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Information Gathering</td>
+                  <td>HelixBot collects required data through conversation or user profile data. The user answers any prompted questions. These answers become the input parameters sent to FlowEngine.</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Data Transformation</td>
+                  <td>HelixBot collects all inputs and conversation context (who is asking, which channel, session identifiers). An outbound mapping script converts this data into the structured format FlowEngine expects.</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Webhook Sent</td>
+                  <td>HelixBot sends the structured payload to FlowEngine's Events API endpoint and holds the conversation open, waiting for a response.</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Workflow Execution</td>
+                  <td>FlowEngine receives the request, routes it to the correct workflow, executes it, and packages the result.</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>Callback &amp; Display</td>
+                  <td>FlowEngine sends the result back to HelixBot using the callback URL. HelixBot identifies the correct conversation and the response appears in the user's chat: <em>✓ Password reset successfully.</em></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="callout callout-note">
+              <p><em class="callout-icon">⏱</em><strong>Total time:</strong> Typically 5–15 seconds from start to finish.</p>
+            </div>
+
+            <h3 id="overview-build">What You Can Build</h3>
+            <p>This integration supports any workflow that collects structured input through conversation, executes a FlowEngine workflow, and returns a confirmation or result to the user.</p>
+
+            <h4>Common use cases</h4>
+            <ul>
+              <li>Password resets and account unlocks</li>
+              <li>Software access requests</li>
+              <li>Approval workflows</li>
+              <li>System status checks</li>
+            </ul>
+
+            <p><strong>In this version:</strong> Clone and customize the pre-built templates for each new use case. Each intent in HelixBot corresponds to a workflow in FlowEngine. Most implementations take 30–60 minutes per workflow, and the consistent template structure ensures every integration behaves the same way.</p>
+
+            <div class="callout callout-note">
+              <p><em class="callout-icon">→</em><strong>Next:</strong> Gather What You Need — Collect all credentials, API tokens, and endpoints before beginning configuration.</p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ── THE PLAYBOOK ── -->
+        <section class="sample" id="playbook">
+          <span class="sample-label">The Playbook</span>
+          <h2>Configure the ITSM Platform Reverse Connection</h2>
+          <p class="sample-meta">A step-by-step setup guide with a built-in troubleshooting section.</p>
+
+          <div class="doc">
+
+            <div class="doc-meta">
+              <div class="doc-meta-item">Doc type: <span>Procedural guide</span></div>
+              <div class="doc-meta-item">Estimated time: <span>15–20 minutes</span></div>
+            </div>
+
+            <p>This guide configures the reverse connection from the ITSM Platform back to HelixBot. You will work entirely in the ITSM Platform interface using modules installed via the update set in a prior setup step.</p>
+
+            <h4>Prerequisites</h4>
+            <ul class="prereq-list">
+              <li>HelixBot configuration completed</li>
+              <li>Update set committed in the ITSM Platform</li>
+              <li>ITSM integration user password on hand</li>
+              <li>HelixBot tenant URL on hand</li>
+            </ul>
+
+            <h3 id="itsm-s1">Step 1: Log In to the ITSM Platform</h3>
+
+            <div class="callout callout-warn">
+              <p><em class="callout-icon">⚠</em><strong>Important:</strong> All steps below happen in the ITSM Platform — not in HelixBot.</p>
+            </div>
+
+            <ol class="steps">
+              <li>Open your ITSM Platform instance in a browser.</li>
+              <li>URL format: <code>https://[instance].itsm-platform.com</code></li>
+              <li>Log in with your ITSM Platform admin credentials.</li>
+            </ol>
+
+            <h3 id="itsm-s2">Step 2: Open the Helix Integration Settings Module</h3>
+            <ol class="steps">
+              <li>In the ITSM Platform Navigator (left sidebar search bar), type: <code>Helix</code></li>
+              <li>In the results, locate the Helix application modules.</li>
+              <li>Click <strong>Helix &gt; Integration Settings</strong>.</li>
+            </ol>
+
+            <div class="checkpoint">You should see a form titled "Integration Settings."</div>
+
+            <h3 id="itsm-s3">Step 3: Enter HelixBot Connection Credentials</h3>
+            <p>In the Integration Settings form, enter the following:</p>
+
+            <table>
+              <thead>
+                <tr><th>Field</th><th>Value</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Username</td><td><code>helix.integration</code></td></tr>
+                <tr><td>Password</td><td>The integration user password from your prior setup step</td></tr>
+                <tr><td>Base URL</td><td><code>https://{tenant}.helix-platform.com/</code></td></tr>
+              </tbody>
+            </table>
+
+            <div class="callout callout-warn">
+              <p><em class="callout-icon">⚠</em><strong>Don't forget the trailing slash.</strong> A missing trailing slash is the single most common cause of connection failure.</p>
+              <p>✅ Correct: <code>https://acme.helix-platform.com/</code><br>
+              ❌ Incorrect: <code>https://acme.helix-platform.com</code></p>
+            </div>
+
+            <p>Click <strong>Save</strong> or <strong>Submit</strong>.</p>
+            <div class="checkpoint">Settings should save without errors.</div>
+
+            <h3 id="itsm-s4">Step 4: Open the Helix Integration Hub Module</h3>
+            <ol class="steps">
+              <li>In the ITSM Platform Navigator, type: <code>Helix</code></li>
+              <li>Click <strong>Helix &gt; Integration Hub</strong>.</li>
+            </ol>
+
+            <div class="checkpoint">You should see a screen with a <strong>Test Connection</strong> or <strong>Test/Refresh Connection</strong> button.</div>
+
+            <h3 id="itsm-s5">Step 5: Test the Connection</h3>
+            <ol class="steps">
+              <li>Click the <strong>Test/Refresh Connection</strong> button.</li>
+              <li>Wait 5–10 seconds while the ITSM Platform sends a test request to HelixBot.</li>
+              <li>Look for a success message in the interface.</li>
+            </ol>
+
+            <div class="callout callout-check">
+              <p><em class="callout-icon">✅</em><strong>Bidirectional connection complete.</strong> You have successfully configured both directions:</p>
+              <p>✅ HelixBot → ITSM Platform<br>✅ ITSM Platform → HelixBot</p>
+              <p>The two systems can now communicate bidirectionally for ticket creation and data exchange.</p>
+            </div>
+
+            <h3 id="itsm-trouble">Troubleshooting</h3>
+
+            <div class="trouble-item">
+              <div class="trouble-cause">Connection test fails — Missing roles <span class="cause-tag">Cause: integration user missing required roles</span></div>
+              <div class="trouble-body">
+                <ul>
+                  <li>Verify all three Helix roles were assigned to the integration user.</li>
+                  <li>Confirm the user also has the <code>itil</code> role if required by your instance configuration.</li>
+                  <li>Verify <strong>Password needs reset</strong> is unchecked on the user record.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="trouble-item">
+              <div class="trouble-cause">Connection test fails — Authentication error <span class="cause-tag">Cause: incorrect username or password</span></div>
+              <div class="trouble-body">
+                <ul>
+                  <li>Verify the username is exactly: <code>helix.integration</code></li>
+                  <li>Verify the password matches what was set during integration user setup.</li>
+                  <li>Verify <strong>Password needs reset</strong> is unchecked.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="trouble-item">
+              <div class="trouble-cause">Connection test fails — URL error <span class="cause-tag">Cause: missing trailing slash</span></div>
+              <div class="trouble-body">
+                <p>A missing trailing slash is the most common cause of connection failure.</p>
+                <ul>
+                  <li>✅ Correct: <code>https://acme.helix-platform.com/</code></li>
+                  <li>❌ Incorrect: <code>https://acme.helix-platform.com</code></li>
+                  <li>The URL must include <code>https://</code> and must end with a trailing slash.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="trouble-item">
+              <div class="trouble-cause">Connection test fails — Network error <span class="cause-tag">Cause: firewall or network configuration</span></div>
+              <div class="trouble-body">
+                <ul>
+                  <li>Verify the ITSM Platform instance can reach external URLs.</li>
+                  <li>Contact your network admin if needed.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="trouble-item">
+              <div class="trouble-cause">Cannot save settings <span class="cause-tag">Cause: wrong application scope</span></div>
+              <div class="trouble-body">
+                <p>You may be working in the Global scope instead of the Helix scope.</p>
+                <ul>
+                  <li>Look for a banner at the top of the screen prompting you to switch application scope.</li>
+                  <li>Click the link to switch to the Helix application scope.</li>
+                  <li>Re-enter settings and save.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="trouble-item">
+              <div class="trouble-cause">No response from test <span class="cause-tag">Cause: HelixBot tenant unreachable</span></div>
+              <div class="trouble-body">
+                <ul>
+                  <li>Verify the HelixBot tenant is accessible by opening it directly in a browser.</li>
+                  <li>Wait 1–2 minutes and try the test again.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="trouble-item">
+              <div class="trouble-cause">Helix modules not visible <span class="cause-tag">Cause: update set not committed or browser cache</span></div>
+              <div class="trouble-body">
+                <ul>
+                  <li>Return to the prior setup step and verify the update set status shows <strong>Committed</strong>.</li>
+                  <li>Hard refresh your browser (<code>Ctrl+Shift+R</code>).</li>
+                  <li>Log out and back in to the ITSM Platform.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="callout callout-note">
+              <p><em class="callout-icon">→</em><strong>Next:</strong> Provision Users from the ITSM Platform — Import your user base into HelixBot.</p>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <footer>
+      <p>Integration tutorial samples use generalized names and identifiers for portfolio purposes. — Tamar Auber Technical Writing Portfolio</p>
+    </footer>
+
+  </body>
+</html>
