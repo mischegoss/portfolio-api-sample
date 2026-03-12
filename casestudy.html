@@ -3,13 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Case Study: Building a Documentation Chatbot That Actually Works — Tamar
-      Auber
-    </title>
+    <title>Technical Writing Portfolio — Tamar Auber</title>
     <meta
       name="description"
-      content="How I shipped a production RAG system that cut support tickets by 30% — and what it took to get there."
+      content="Technical Writing Portfolio — Tamar Auber. API documentation, enterprise knowledge bases, and AI self-service systems."
     />
     <style>
       *,
@@ -67,40 +64,16 @@
       }
 
       .page {
-        max-width: 780px;
+        max-width: 1080px;
         margin: 0 auto;
         padding: 72px 0 80px;
       }
 
       /* ── Header ── */
       .header {
-        margin-bottom: 48px;
-        border-bottom: 2px solid var(--teal);
+        margin-bottom: 52px;
+        border-bottom: 2px solid var(--cerulean);
         padding-bottom: 28px;
-      }
-
-      .back-link {
-        font-family:
-          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--gold);
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        margin-bottom: 24px;
-        border-bottom: 1px solid transparent;
-        padding-bottom: 1px;
-        transition:
-          color 0.15s,
-          border-color 0.15s;
-      }
-      .back-link:hover {
-        color: var(--gold-light);
-        border-bottom-color: var(--gold-light);
       }
 
       .header-label {
@@ -110,18 +83,18 @@
         font-weight: 700;
         letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: var(--teal);
+        color: var(--gold);
         margin-bottom: 12px;
         display: block;
       }
 
       .header h1 {
-        font-size: clamp(24px, 3.5vw, 36px);
+        font-size: clamp(28px, 4vw, 40px);
         font-weight: 700;
         color: var(--cerulean);
         letter-spacing: -0.02em;
         line-height: 1.2;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
       }
 
       .header-sub {
@@ -130,151 +103,190 @@
         font-size: 15px;
         color: var(--text-soft);
         font-style: italic;
-        margin-bottom: 28px;
       }
 
-      /* ── Meta strip ── */
-      .meta-strip {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0;
-        border: 1px solid var(--rule);
-        border-radius: 4px;
-        overflow: hidden;
+      /* ── Cards: 2 rows × 3 cols ── */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+
+      .card {
         background: var(--surface);
-      }
-
-      .meta-item {
-        flex: 1 1 160px;
-        padding: 14px 20px;
-        border-right: 1px solid var(--rule);
-      }
-      .meta-item:last-child {
-        border-right: none;
-      }
-
-      .meta-label {
-        font-family:
-          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--text-soft);
-        display: block;
-        margin-bottom: 4px;
-      }
-
-      .meta-value {
-        font-family:
-          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text);
-      }
-
-      /* ── Body content ── */
-      .content {
-        margin-top: 48px;
+        border: 1px solid var(--rule);
+        border-top: 4px solid transparent;
+        border-radius: 4px;
+        padding: 28px 28px 24px;
         display: flex;
         flex-direction: column;
-        gap: 40px;
+        transition: box-shadow 0.18s;
       }
 
-      .section-label {
+      .card:hover {
+        box-shadow: 0 4px 20px rgba(15, 33, 67, 0.1);
+      }
+
+      .card-1 {
+        border-top-color: var(--cerulean);
+      }
+      .card-2 {
+        border-top-color: var(--pacific);
+      }
+      .card-3 {
+        border-top-color: var(--rust);
+      }
+      .card-4 {
+        border-top-color: var(--plum);
+      }
+      .card-5 {
+        border-top-color: var(--olive);
+      }
+      .card-6 {
+        border-top-color: var(--teal);
+      }
+
+      .card-num {
         font-family:
           -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         font-size: 10.5px;
         font-weight: 700;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: var(--gold);
-        display: block;
+        color: var(--text-soft);
         margin-bottom: 10px;
+        display: block;
       }
 
-      .content h2 {
-        font-size: 20px;
+      .card h2 {
+        font-size: 18px;
         font-weight: 700;
         color: var(--cerulean);
         letter-spacing: -0.01em;
         line-height: 1.3;
-        margin-bottom: 14px;
+        margin-bottom: 12px;
       }
 
-      .content p {
-        font-size: 15.5px;
-        color: var(--text-mid);
-        line-height: 1.8;
-        margin-bottom: 14px;
-      }
-      .content p:last-child {
-        margin-bottom: 0;
-      }
-
-      /* ── Callout block ── */
-      .callout {
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-left: 4px solid var(--teal);
-        border-radius: 0 4px 4px 0;
-        padding: 20px 24px;
+      .card p {
         font-family:
           -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         font-size: 14px;
-        font-style: italic;
         color: var(--text-mid);
         line-height: 1.7;
+        margin-bottom: 20px;
+        flex: 1;
       }
 
-      /* ── Outcomes ── */
-      .outcomes {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-      }
-
-      .outcome-card {
-        flex: 1 1 180px;
-        background: var(--surface);
-        border: 1px solid var(--rule);
-        border-top: 4px solid var(--teal);
-        border-radius: 4px;
-        padding: 20px 22px;
-        text-align: center;
-      }
-
-      .outcome-stat {
+      .card-link {
         font-family:
           -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-size: 28px;
-        font-weight: 700;
-        color: var(--teal);
-        letter-spacing: -0.02em;
-        display: block;
-        line-height: 1.1;
-        margin-bottom: 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--gold);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 1px;
+        margin-top: auto;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+      }
+      .card-link:hover {
+        color: var(--gold-light);
+        border-bottom-color: var(--gold-light);
+      }
+      .card-link:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 4px;
+        border-radius: 2px;
+      }
+      .card-link svg {
+        flex-shrink: 0;
+        transition: transform 0.15s;
+      }
+      .card-link:hover svg {
+        transform: translate(2px, -2px);
       }
 
-      .outcome-desc {
-        font-family:
-          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-size: 12.5px;
-        color: var(--text-soft);
-        line-height: 1.4;
-      }
-
-      /* ── Closing line ── */
-      .closing {
+      /* ── Approach section ── */
+      .approach {
+        margin-bottom: 52px;
+        padding: 32px 36px;
         background: var(--surface);
         border: 1px solid var(--rule);
         border-left: 4px solid var(--cerulean);
         border-radius: 0 4px 4px 0;
-        padding: 22px 26px;
-        font-size: 15.5px;
-        font-style: italic;
+      }
+
+      .approach-heading {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .approach h2 {
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--cerulean);
+        letter-spacing: -0.01em;
+        margin-bottom: 18px;
+        line-height: 1.3;
+      }
+
+      .approach-body {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .approach-intro {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 14px;
         color: var(--text-mid);
         line-height: 1.75;
+      }
+
+      .approach-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+
+      .approach-list li {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 13.5px;
+        color: var(--text-mid);
+        padding-left: 18px;
+        position: relative;
+        line-height: 1.55;
+      }
+
+      .approach-list li::before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        color: var(--gold);
+        font-weight: 700;
+      }
+
+      @media (max-width: 820px) {
+        .approach {
+          padding: 24px 22px;
+        }
       }
 
       /* ── Footer ── */
@@ -288,16 +300,21 @@
         color: var(--text-soft);
       }
 
-      @media (max-width: 600px) {
-        .meta-item {
-          border-right: none;
-          border-bottom: 1px solid var(--rule);
+      @media (max-width: 820px) {
+        .cards {
+          grid-template-columns: repeat(2, 1fr);
         }
-        .meta-item:last-child {
-          border-bottom: none;
+      }
+
+      @media (max-width: 520px) {
+        .cards {
+          grid-template-columns: 1fr;
         }
         .page {
           padding: 48px 0 64px;
+        }
+        .card {
+          padding: 22px 20px;
         }
       }
     </style>
@@ -305,162 +322,259 @@
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
 
-    <main id="main">
-      <div class="page">
-        <header class="header">
-          <a class="back-link" href="./index.html"> ← Portfolio </a>
-          <span class="header-label">Case Study</span>
-          <h1>Building a Documentation Chatbot That Actually Works</h1>
-          <p class="header-sub">
-            How I shipped a production RAG system that cut support tickets by
-            30% — and what it took to get there.
-          </p>
+    <div class="page">
+      <header class="header">
+        <span class="header-label">Technical Writing Portfolio</span>
+        <h1>Tamar Auber</h1>
+        <p class="header-sub">
+          Enterprise documentation, API reference, and AI self-service systems.
+        </p>
+      </header>
 
-          <div class="meta-strip">
-            <div class="meta-item">
-              <span class="meta-label">Role</span>
-              <span class="meta-value">Technical Writer &amp; DocOps</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Stack</span>
-              <span class="meta-value"
-                >Python · Google Cloud · Zendesk API · React</span
-              >
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Scope</span>
-              <span class="meta-value"
-                >Most trafficked documentation site — highest support ticket
-                volume across all products</span
-              >
-            </div>
+      <main id="main">
+        <section class="approach" aria-label="My approach">
+          <span class="approach-heading">My Approach</span>
+          <h2>
+            My Approach to Technical Writing and Documentation Engineering
+          </h2>
+          <div class="approach-body">
+            <p class="approach-intro">
+              My approach combines strong fundamentals with hands-on
+              experimentation — building documentation that works in the same
+              way that software does: tested, versioned, and continuously
+              improved.
+            </p>
+            <ul class="approach-list">
+              <li>
+                Building docs-as-code workflows using Docusaurus, Git, and
+                structured content principles, maintaining three production
+                sites that served 226k+ users with 100% uptime in 2025
+              </li>
+              <li>
+                Translating complex automation workflows into executable
+                tutorials with REST APIs and sample code, reducing customer
+                integration build time by 40%
+              </li>
+              <li>
+                Validating documentation by testing configurations in working
+                environments, not just reviewing drafts
+              </li>
+              <li>
+                Shipping AI-powered self-service tools — including seven
+                production chatbots built in Python on Google Cloud — that
+                reduced support tickets by 30%
+              </li>
+              <li>
+                Collaborating with engineers and support teams to identify gaps
+                and continuously refine content using real user data
+              </li>
+            </ul>
           </div>
-        </header>
+        </section>
 
-        <div class="content">
-          <section>
-            <span class="section-label">The Problem</span>
+        <div class="cards" role="list">
+          <!-- Card 1 -->
+          <article class="card card-1" role="listitem">
+            <span class="card-num">01 &mdash; Information Architecture</span>
+            <h2>Documentation Ecosystem</h2>
             <p>
-              Enterprise documentation at scale creates a self-service gap.
-              Users have questions. The answers exist somewhere in the docs. But
-              <em>somewhere</em> isn't good enough when you're trying to resolve
-              an incident at 2am or onboard a new customer fast.
+              Architected 3 unified docs-as-code sites using Docusaurus, custom
+              React components, and structured navigation, supporting 226k+ user
+              sessions with zero downtime in 2025.
             </p>
-            <p>
-              Support tickets were the symptom. Users were turning to the
-              support team to find answers that existed in the docs — increasing
-              the burden on support staff and pushing resolution times out by
-              days. The previous solution made it worse: a general-purpose
-              chatbot purchased from the vendor struggled with deeply nested
-              documentation and highly technical language, producing misleading
-              or outright hallucinated answers at a
-              <strong>27% fail rate</strong> — even on simple requests. It also
-              had no way to surface the richer step-by-step content in the
-              support knowledge base, leaving a significant portion of available
-              answers unreachable.
-            </p>
-          </section>
+            <a
+              class="card-link"
+              href="https://help.resolve.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View knowledge base — opens in a new tab"
+            >
+              View documentation
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                aria-hidden="true"
+              >
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a>
+          </article>
 
-          <section>
-            <span class="section-label">The Constraint That Mattered</span>
+          <!-- Card 2 -->
+          <article class="card card-2" role="listitem">
+            <span class="card-num"
+              >02 &mdash; API &amp; Technical Reference</span
+            >
+            <h2>API Documentation Samples</h2>
             <p>
-              A general-purpose chatbot wasn't the answer. The risk of
-              hallucination — a confident, plausible, wrong answer — is higher
-              in enterprise IT automation than in most domains. A user following
-              bad instructions can break a production workflow.
+              Translated complex automation workflows into executable tutorials
+              featuring REST APIs and sample code, with a focus on Agentic AI
+              ingestion and authentication patterns.
             </p>
-            <p>
-              <strong>Design requirement:</strong> Every answer had to be
-              grounded strictly in versioned product documentation. No
-              improvisation. No answers from outside the knowledge base.
-            </p>
-          </section>
+            <a
+              class="card-link"
+              href="./api.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View API documentation samples — opens in a new tab"
+            >
+              View API samples
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                aria-hidden="true"
+              >
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a>
+          </article>
 
-          <section>
-            <span class="section-label">The Approach</span>
+          <!-- Card 3 -->
+          <article class="card card-3" role="listitem">
+            <span class="card-num">03 &mdash; Integration Tutorials</span>
+            <h2>End-to-End Integration Guides</h2>
             <p>
-              This was the second generation of the chatbot — and the first
-              built from scratch. The original vendor solution never performed
-              well enough to be reliable, so I spent time iterating on and
-              improving it across four product lines before ultimately replacing
-              it entirely. When the vendor solution was retired, I rebuilt from
-              the ground up in Python on Google Cloud. Three custom-built
-              replacements are currently in production; seven total have shipped
-              across the full lifecycle.
+              Developed an API integration and workflow runbook for ServiceNow
+              and Agentic AI ingestion, written to onboard engineers to new
+              product and integration strategies.
             </p>
-            <p>
-              The custom solution uses a RAG (retrieval-augmented generation)
-              architecture — retrieving answers from the actual docs before
-              generating a response, then surfacing inline source citations so
-              users can verify exactly where the answer came from and navigate
-              directly to the relevant page.
-            </p>
-            <p>
-              For deeper troubleshooting, the chatbot integrates with the
-              Zendesk API to search support articles — version-aware, so a user
-              on version 8.0 gets results tied to their version, not a newer
-              release that might not apply.
-            </p>
-          </section>
+            <a
+              class="card-link"
+              href="./tutorial.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View integration tutorial samples — opens in a new tab"
+            >
+              View tutorial samples
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                aria-hidden="true"
+              >
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a>
+          </article>
 
-          <section>
-            <span class="section-label">Making It Reliable</span>
+          <!-- Card 4 -->
+          <article class="card card-4" role="listitem">
+            <span class="card-num">04 &mdash; Learning Design</span>
+            <h2>Microlearning Example</h2>
             <p>
-              Shipping it was one problem. Trusting it was another. I ran
-              adversarial testing to surface failure patterns — edge cases,
-              prompt gaps, and retrieval failures — before users could find them
-              first. I also implemented a thumbs up/down feedback loop so real
-              usage data could drive continuous refinement after launch.
+              Designed AI-driven learning modules with screen-recorded software
+              simulations and scenario-based assessments, applying instructional
+              design and adult learning theory best practices.
             </p>
-            <div class="callout">
-              On adversarial testing: The goal wasn't to make the chatbot look
-              good in demos. It was to find out where it would fail in
-              production — and fix it before anyone noticed.
-            </div>
-          </section>
+            <a
+              class="card-link"
+              href="./content/index.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View microlearning example — opens in a new tab"
+            >
+              View learning module
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                aria-hidden="true"
+              >
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a>
+          </article>
 
-          <section>
-            <span class="section-label">The Outcome</span>
-            <div class="outcomes">
-              <div class="outcome-card">
-                <span class="outcome-stat">30%</span>
-                <span class="outcome-desc"
-                  >Reduction in support tickets after launch</span
-                >
-              </div>
-              <div class="outcome-card">
-                <span class="outcome-stat">27% → &lt;9%</span>
-                <span class="outcome-desc"
-                  >Fail rate improvement — support team also reported faster
-                  knowledge retrieval and higher-quality answers</span
-                >
-              </div>
-              <div class="outcome-card">
-                <span class="outcome-stat">7 / 3</span>
-                <span class="outcome-desc"
-                  >Chatbots shipped total — 3 custom-built replacements
-                  currently in production</span
-                >
-              </div>
-              <div class="outcome-card">
-                <span class="outcome-stat">92%</span>
-                <span class="outcome-desc"
-                  >Increase in chatbot usage after launch — nearly double the
-                  prior baseline</span
-                >
-              </div>
-            </div>
-          </section>
+          <!-- Card 5 -->
+          <article class="card card-5" role="listitem">
+            <span class="card-num">05 &mdash; AI-Driven Self-Service</span>
+            <h2>Documentation/Support Chatbot</h2>
+            <p>
+              Shipped 7 AI chatbots using Python, RAG systems, and Google Cloud,
+              enabling customer self-service and reducing support escalations by
+              30% in 2025.
+            </p>
+            <a
+              class="card-link"
+              href="https://youtu.be/AHXfQGmsHgc?si=lMcKM797mDnFhcrE"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View RANI chatbot live example — opens in a new tab"
+            >
+              View video of live chatbot demo
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                aria-hidden="true"
+              >
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a>
+          </article>
 
-          <div class="closing">
-            Shipping AI-powered documentation tooling isn't just a writing
-            problem or just an engineering problem. It sits at the intersection
-            — and that's exactly where I work.
-          </div>
+          <!-- Card 6 -->
+          <article class="card card-6" role="listitem">
+            <span class="card-num">06 &mdash; Connect</span>
+            <h2>Case Study: AI-Powered Self-Service</h2>
+            <p>
+              How I built a production RAG system grounded in versioned docs —
+              with adversarial testing, a Zendesk integration, and a 30%
+              reduction in support tickets.
+            </p>
+            <a
+              class="card-link"
+              href="./casestudy.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View LinkedIn profile — opens in a new tab"
+            >
+              Read the case study
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                aria-hidden="true"
+              >
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
+            </a>
+          </article>
         </div>
+      </main>
 
-        <footer>Technical Writing Portfolio — Tamar Auber</footer>
-      </div>
-    </main>
+      <footer>
+        <p>
+          API documentation and tutorial samples use generalized names and
+          identifiers for portfolio purposes.
+        </p>
+      </footer>
+    </div>
   </body>
 </html>
