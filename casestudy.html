@@ -9,7 +9,7 @@
     </title>
     <meta
       name="description"
-      content="How I shipped a production RAG system that cut support escalations by 30% — and what it took to get there."
+      content="How I shipped a production RAG system that cut support escalations by 30%, and what it took to get there."
     />
     <style>
       *,
@@ -313,7 +313,7 @@
           <h1>Building a Documentation Chatbot That Actually Works</h1>
           <p class="header-sub">
             How I shipped a production RAG system that cut support escalations
-            by 30% — and what it took to get there.
+            by 30%, and what it took to get there.
           </p>
 
           <div class="meta-strip">
@@ -330,8 +330,8 @@
             <div class="meta-item">
               <span class="meta-label">Scope</span>
               <span class="meta-value"
-                >Most trafficked documentation site — highest support escalation
-                volume across all products</span
+                >Most trafficked documentation site, with the highest support
+                escalation volume across all products</span
               >
             </div>
           </div>
@@ -364,7 +364,7 @@
             <span class="section-label">The Constraint That Mattered</span>
             <p>
               A general-purpose chatbot clearly wasn't the answer. A
-              hallucination — a confident, plausible, wrong answer — is costly
+              hallucination (a confident, plausible, wrong answer) is costly
               when the docs serve IT professionals running enterprise systems. A
               user who follows bad instructions can break a production workflow
               and lose days.
@@ -382,7 +382,7 @@
               This was the chatbot's second generation. The vendor solution was
               never reliable enough, so I iterated on it across four product
               lines before replacing it. That failed experiment taught me where
-              the model fell short and what users actually needed. Then I rebuilt
+              the model fell short and what users needed. Then I rebuilt
               the chatbots in Python on Google Cloud, drawing on AI projects I'd
               built for hackathons and a hard focus on testing. Three
               custom-built bots are now in production. Counting the modified
@@ -406,8 +406,8 @@
             <span class="section-label">Making It Reliable</span>
             <p>
               Shipping it was one problem. Trusting it was another. I ran
-              adversarial testing to surface failure patterns — edge cases,
-              prompt gaps, and retrieval failures — before users hit them. I
+              adversarial testing to surface failure patterns (edge cases,
+              prompt gaps, and retrieval failures) before users hit them. I
               also added a thumbs up/down feedback loop so real usage data could
               drive improvements after launch.
             </p>
@@ -425,8 +425,8 @@
               <div class="outcome-card">
                 <span class="outcome-stat">27% → &lt;9%</span>
                 <span class="outcome-desc"
-                  >Fail rate improvement measured by thumbs up/down feedback —
-                  support team also reported faster knowledge retrieval and
+                  >Fail rate improvement measured by thumbs up/down feedback.
+                  The support team also reported faster knowledge retrieval and
                   higher-quality answers</span
                 >
               </div>
@@ -440,7 +440,7 @@
               <div class="outcome-card">
                 <span class="outcome-stat">92%</span>
                 <span class="outcome-desc"
-                  >Increase in chatbot usage after launch — nearly double the
+                  >Increase in chatbot usage after launch, nearly double the
                   prior baseline</span
                 >
               </div>
