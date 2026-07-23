@@ -347,66 +347,58 @@
               a critical issue or find a solution fast.
             </p>
             <p>
-              As a result, users were turning to the support team to find
-              answers that existed in the docs. This increased the burden on
-              support staff and pushed resolution times out, sometimes by days.
-              The out of the box solution made it worse: a general-purpose
-              chatbot purchased from a vendor struggled with deeply nested
-              documentation and highly technical language, producing misleading
-              or outright hallucinated answers at a
-              <strong>27% fail rate</strong> — even on simple requests. The
-              vendor also had no way to surface the richer step-by-step content
-              in the support knowledge base, leaving a significant portion of
-              available answers unreachable, except by contacting support.
+              So users turned to the support team for answers that were already
+              in the docs. That added to the support team's load and pushed
+              resolution times out, sometimes by days. The out-of-the-box fix
+              made it worse. A general-purpose chatbot from a vendor struggled
+              with deeply nested docs and dense technical language, and it
+              hallucinated or gave misleading answers at a
+              <strong>27% fail rate</strong>, even on simple requests. It also
+              couldn't reach the step-by-step content in the support knowledge
+              base, so many available answers stayed hidden unless a user
+              contacted support.
             </p>
           </section>
 
           <section>
             <span class="section-label">The Constraint That Mattered</span>
             <p>
-              It was clear that a general-purpose chatbot wasn't the answer. The
-              consequence of a hallucination — a confident, plausible, wrong
-              answer — can be dire when documentation is aimed at IT
-              professionals working on enterprise systems. A user following bad
-              instructions can break a production workflow, and set them back
-              for days.
+              A general-purpose chatbot clearly wasn't the answer. A
+              hallucination — a confident, plausible, wrong answer — is costly
+              when the docs serve IT professionals running enterprise systems. A
+              user who follows bad instructions can break a production workflow
+              and lose days.
             </p>
             <p>
-              <strong>Design requirement:</strong> Every answer had to be
-              grounded strictly in versioned product documentation. No
-              improvisation. No answers from outside the knowledge base. The bot
-              needed to be grounded in the actual docs.
+              <strong>Design requirement:</strong> every answer had to be
+              grounded in versioned product documentation. No improvisation. No
+              answers from outside the knowledge base.
             </p>
           </section>
 
           <section>
             <span class="section-label">The Approach</span>
             <p>
-              This was the second generation of the chatbot. The original vendor
-              solution never performed well enough to be reliable, so I spent
-              time iterating on and improving it across four product lines to
-              try and improve functionality before ultimately replacing it
-              entirely. This failed experiment gave me crucial insights into the
-              limitations of the current model and the features the users
-              actually needed to get the job done. Then, I rebuilt the chatbots
-              from the ground up in Python on Google Cloud, drawing on
-              experience building AI solutions for hackathons and the need for
-              strong testing. As a result, three custom-built bots are currently
-              in production; seven total, including the modified vendor
-              versions, have shipped across the full lifecycle.
+              This was the chatbot's second generation. The vendor solution was
+              never reliable enough, so I iterated on it across four product
+              lines before replacing it. That failed experiment taught me where
+              the model fell short and what users actually needed. Then I rebuilt
+              the chatbots in Python on Google Cloud, drawing on AI projects I'd
+              built for hackathons and a hard focus on testing. Three
+              custom-built bots are now in production. Counting the modified
+              vendor versions, seven have shipped in total.
             </p>
             <p>
-              The custom solution uses a RAG (retrieval-augmented generation)
-              architecture — retrieving answers from the actual docs before
-              generating a response, then surfacing inline source citations so
-              users can verify exactly where the answer came from and navigate
-              directly to the relevant page.
+              The custom solution uses RAG (retrieval-augmented generation): it
+              retrieves answers from the actual docs before generating a
+              response. It also adds inline source citations, so users can see
+              exactly where an answer came from and jump to the relevant page.
             </p>
             <p>
-              For deeper troubleshooting, the chatbot integrates with the
-              Zendesk API to search support articles — version-aware, so a user
-              on version 8.0 gets results tied to their version, not a newer
-              release that might not apply.
+              For deeper troubleshooting, the chatbot uses the Zendesk API to
+              search support articles. It's version-aware: a user on version 8.0
+              gets results for their version, not a newer release that might not
+              apply.
             </p>
           </section>
 
@@ -415,9 +407,9 @@
             <p>
               Shipping it was one problem. Trusting it was another. I ran
               adversarial testing to surface failure patterns — edge cases,
-              prompt gaps, and retrieval failures — before users could find them
-              first. I also implemented a thumbs up/down feedback loop so real
-              usage data could drive continuous improvements after launch.
+              prompt gaps, and retrieval failures — before users hit them. I
+              also added a thumbs up/down feedback loop so real usage data could
+              drive improvements after launch.
             </p>
           </section>
 
@@ -456,9 +448,8 @@
           </section>
 
           <div class="closing">
-            Shipping AI-powered documentation tooling isn't just a writing
-            problem or just an engineering problem. It sits at the intersection
-            — and that's exactly where I work.
+            Shipping AI-powered documentation tooling takes both writing and
+            engineering. That intersection is where I work.
           </div>
         </div>
 
